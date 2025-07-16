@@ -1,0 +1,117 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}Upload Study Material{% endblock %}
+
+{% block extra_css %}
+<style>
+    .study-container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .study-header {
+        color: #7a4df3;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .form-group input[type="file"] {
+        padding: 6px;
+    }
+
+    .submit-btn {
+        background-color: #7a4df3;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #643cd9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Study Material</h1>
+        <h4>Upload Chapter-wise Content</h4>
+    </div>
+</div>
+
+<div class="study-container">
+    <div class="study-header">📚 Upload Study Material</div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Select Class:</label>
+            <select name="class">
+                <option value="">-- Select Class --</option>
+                <option value="Class 10">Class 10</option>
+                <option value="Class 11">Class 11</option>
+                <option value="Class 12">Class 12</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Select Subject:</label>
+            <select name="subject">
+                <option value="">-- Select Subject --</option>
+                <option value="Maths">Maths</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+                <option value="English">English</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Chapter Title:</label>
+            <input type="text" name="chapter_title" placeholder="Eg. Chapter 1: Real Numbers">
+        </div>
+
+        <div class="form-group">
+            <label>Description (Optional):</label>
+            <textarea name="description" rows="3" placeholder="Add any brief description..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Upload File (PDF/DOC/PPT):</label>
+            <input type="file" name="material_file">
+        </div>
+
+        <div style="text-align: right;">
+            <button type="submit" class="submit-btn">Upload</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

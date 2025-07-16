@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Teacher Dashboard{% endblock %}</title>
+    <title>Teacher Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            display: flex;
+        }
+
+        .sidebar {
+            margin: 6px;
+            width: 250px;
+            background-color: #7a4df3;
+            color: white;
+            height: 98vh;
+            padding: 30px 5px 0px 0px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow: visible;
+        }
+
+        .toggle-btn {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: -25px;
+            z-index: 1100;
+            background-color: white;
+            color: white;
+            font-weight: 900;
+            border: 6px solid #7a4df3;
+            padding: 10px 15px;
+            border-radius: 100%;
+            cursor: pointer;
+        }
+
+        .toggle-btn img {
+            height: 25px;
+            width: 20px;
+            color: wheat;
+        }
+
+        .rotate-toggle-img {
+            transform: rotate(180deg);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 40px;
+            margin-left: 30px;
+            font-size: 20px;
+        }
+
+        .sidebar .top-sidebar a {
+            text-decoration: none;
+            color: white;
+            margin: 5px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: all 0.2s ease-out;
+            overflow: visible;
+        }
+
+        .sidebar .top-sidebar a:hover {
+            text-decoration: none;
+            color: #7a4df3;
+            background-color: white;
+            border-bottom-right-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .active {
+            text-decoration: none;
+            color: #7a4df3 !important;
+            font-weight: 900;
+            display: block;
+            background-color: white;
+            border-bottom-right-radius: 20px;
+            border-top-right-radius: 20px;
+            border-top-left-radius: -20px;
+        }
+
+        .top-sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logout-div {
+            color: #7a4df3;
+            margin: 10px;
+            padding: 10px;
+            height: 150px;
+            border-radius: 10px;
+            background-color: rgba(247, 232, 247, 0.881);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        .logout-div a {
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            padding: 10px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #7a4df3;
+            background-color: white;
+            transition: all 0.2s;
+        }
+
+        .logout-div a:hover {
+            background-color: #7a4df3;
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            padding: 10px 30px;
+            margin-left: 250px;
+            width: 100%;
+        }
+
+        .header {
+            background: linear-gradient(to bottom right, #7a4df3, #9c7eee);
+            color: white;
+            height: 20vh;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 22px;
+        }
+
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.visible {
+                transform: translateX(0);
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="top-sidebar">
+            <h2>Teacher Panel</h2>
+            <button class="toggle-btn" onclick="toggleSidebar()">
+                <img id="toggle_image" src="{% static 'images/arrow.gif' %}" alt="">
+            </button>
+            <a class="{% if request.path == '/teacher-profile/' %} active {% endif %}" href="{% url 'teacher_profile' %}" onclick="hideSidebar()"> Profile</a>
+            <a class="{% if request.path == '/teacher-attendance/' %} active {% endif %}" href="{% url 'teacher_attendance' %}" onclick="hideSidebar()"> Attendance</a>
+            <a class="{% if request.path == '/teacher-courses/' %} active {% endif %}" href="{% url 'teacher_courses' %}" onclick="hideSidebar()"> Assigned Courses</a>
+            <a class="{% if request.path == '/teacher-evaluation/' %} active {% endif %}" href="{% url 'teacher_evaluation' %}" onclick="hideSidebar()"> Student Evaluation</a>
+            <a class="{% if request.path == '/teacher-upload-marks/' %} active {% endif %}" href="{% url 'teacher_upload_marks' %}" onclick="hideSidebar()"> Upload Marks</a>
+            <a class="{% if request.path == '/teacher-notices/' %} active {% endif %}" href="{% url 'teacher_notices' %}" onclick="hideSidebar()"> Notices</a>
+            <a class="{% if request.path == '/teacher-schedule/' %} active {% endif %}" href="{% url 'teacher_schedule' %}" onclick="hideSidebar()"> Schedule</a>
+            <a class="{% if request.path == '/teacher-study-material/' %} active {% endif %}" href="{% url 'teacher_study_material' %}" onclick="hideSidebar()"> Study Material</a>
+            <a href="#"> Assignments</a>
+            <a href="#"> Reports</a>
+        </div>
+        <div class="bottom-sidebar">
+            <div class="logout-div">
+                <div>
+                    <h3>Prof. Ayush Patel</h3>
+                    <h5>Teacher ID: TCH24003</h5>
+                </div>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        {% block content %}
+        <!-- This will be replaced by child templates -->
+        {% endblock %}
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleimage = document.getElementById('toggle_image');
+        function toggleSidebar() {
+            sidebar.classList.toggle('visible');
+            toggleimage.classList.toggle('rotate-toggle-img')
+        }
+        function hideSidebar() {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('visible');
+            }
+        }
+    </script>
+</body>
+
+
+</html>

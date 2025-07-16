@@ -1,0 +1,172 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}Upload Marks{% endblock %}
+
+{% block extra_css %}
+<style>
+    .marks-container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .marks-header {
+        color: #7a4df3;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .class-select {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .class-select select {
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    th, td {
+        padding: 10px 14px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background-color: #f8f8f8;
+    }
+
+    input[type="number"] {
+        width: 60px;
+        padding: 6px;
+        text-align: center;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .submit-btn {
+        margin-top: 20px;
+        background-color: #7a4df3;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #643cd9;
+    }
+
+    @media(max-width: 768px) {
+        table {
+            font-size: 12px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+
+        .marks-header {
+            font-size: 18px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Upload Marks</h1>
+        <h4>Upload and Update the Marks</h4>
+    </div>
+</div>
+
+<div class="marks-container">
+    <div class="marks-header">📊 Upload Marks - Exam Entry</div>
+
+    <!-- Class and subject selection -->
+    <form method="get" action="{% url 'teacher_upload_marks' %}" style="margin-bottom: 20px;">
+        <div class="class-select">
+            <label><strong>Select Class:</strong></label>
+            <select name="selected_class" onchange="this.form.submit()">
+                <option value="">Select Class</option>
+                {% for c in classes %}
+                    <option value="{{ c }}" {% if c == selected_class %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <label><strong>Select Subject:</strong></label>
+            <select name="selected_subject" onchange="this.form.submit()">
+                <option value="">Select Subject</option>
+                {% for s in subjects %}
+                    <option value="{{ s }}" {% if s == selected_subject %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+
+            <label><strong>Select Exam:</strong></label>
+            <select name="selected_exam" onchange="this.form.submit()">
+                <option value="">Select Exam</option>
+                <option value="P-1" {% if selected_exam == 'P-1' %}selected{% endif %}>P-1</option>
+                <option value="P-2" {% if selected_exam == 'P-2' %}selected{% endif %}>P-2</option>
+                <option value="P-3" {% if selected_exam == 'P-3' %}selected{% endif %}>P-3</option>
+                <option value="Mid-Term" {% if selected_exam == 'Mid-Term' %}selected{% endif %}>Mid-Term</option>
+                <option value="Yearly" {% if selected_exam == 'Yearly' %}selected{% endif %}>Yearly</option>
+            </select>
+        </div>
+    </form>
+
+    <form method="post" action="{% url 'teacher_upload_marks' %}">
+        {% csrf_token %}
+
+        {% if students and selected_subject and selected_exam %}
+        <input type="hidden" name="selected_class" value="{{ selected_class }}">
+        <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
+        <input type="hidden" name="selected_exam" value="{{ selected_exam }}">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>{{ selected_subject }} ({{ selected_exam }})</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.id }}<input type="hidden" name="student_ids" value="{{ student.id }}"></td>
+                    <td>{{ student.name }}</td>
+                    <td><input type="number" name="{{ student.id }}_marks" min="0" max="100"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="text-align: right;">
+            <button type="submit" class="submit-btn">Submit Marks</button>
+        </div>
+        {% else %}
+            <p style="color: #999;">Please select class, subject, and exam to proceed.</p>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

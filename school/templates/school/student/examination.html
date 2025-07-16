@@ -1,0 +1,520 @@
+{% extends 'school/student/base.html' %}
+{% load static %}
+
+{% block title %}Examination{% endblock %}
+
+{% block extra_css %}
+<style>
+    .exam-tabs-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 20px;
+    }
+
+    .exam-tabs {
+        display: flex;
+        gap: 20px;
+        padding: 10px 0;
+        flex-wrap: nowrap;
+        min-width: max-content;
+    }
+
+    .exam-tabs::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .exam-tabs::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+
+    .exam-tabs button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+    }
+
+    .exam-tabs button.active {
+        background-color: #5e39c9;
+        color: white !important;
+    }
+
+
+    .exam-section {
+        display: none;
+        background-color: white;
+        border-radius: 10px;
+        padding: 2%;
+        animation: fade 0.4s ease-in;
+    }
+
+    .exam-section.active {
+        display: block;
+    }
+
+    /* Responsive table scroll */
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+    .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+
+    @keyframes fade {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .exam-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fefdff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .exam-table th,
+    .exam-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .exam-table th {
+        background-color: #f0edff;
+        color: #7a4df3;
+    }
+
+    .download-btn {
+        margin-top: 10px;
+        background-color: #ffa500;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .admit-card-show {
+        padding: 20px;
+        margin:0 0 20px 0;
+        background-color: #f0edff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%
+    }
+
+    .admit-card-show h3 {
+        color: #7a4df3;
+    }
+
+    .admit-card-show p {
+        color: #000;
+        margin-bottom: 5px;
+    }
+
+    /* ------------ */
+    .admit-card {
+        padding: 20px;
+        margin: auto;
+        background: white;
+        color: #000;
+        border: 1px solid #aaa;
+        font-family: 'Inter', sans-serif;
+        display: none;
+    }
+
+    .school-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .school-header img {
+        height: 80px;
+    }
+
+    .student-info {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        gap: 20px;
+    }
+
+    .student-info img {
+        height: 100px;
+        width: 100px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    .exam-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .exam-table th,
+    .exam-table td {
+        border: 1px solid #999;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .instructions ul {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Examinations</h1>
+        <h4>Academic Year: 2024-2025</h4>
+    </div>
+    <p>Student ID: STD2500001</p>
+</div>
+
+<div class="exam-tabs-container">
+    <div class="exam-tabs">
+        <button class="tab-btn active" onclick="showSection('results')">Results</button>
+        <button class="tab-btn" onclick="showSection('internal')">Internal Assessment</button>
+        <button class="tab-btn" onclick="showSection('schedule')">Exam Schedule</button>
+        <button class="tab-btn" onclick="showSection('admit')">Admit Card</button>
+    </div>
+</div>
+
+
+<!-- RESULTS -->
+<!-- RESULTS WITH CLASS SELECTOR -->
+<div id="results" class="exam-section active">
+
+    <!-- Class Selector Dropdown -->
+    <label for="classSelect"><strong>Select Class:</strong></label>
+    <select id="classSelect" onchange="showResultByClass()"
+        style="margin: 10px 0; padding: 6px; border-radius: 6px; border: 1px solid #ccc;">
+        <option value="class12">Class 12</option>
+        <option value="class11">Class 11</option>
+        <option value="class10">Class 10</option>
+    </select>
+
+    <!-- Class 12 Result Table -->
+    <div class="result-table class12">
+        <div class="table-responsive">
+            <table class="exam-table">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                        <th>Total</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Math</td>
+                        <td>87</td>
+                        <td>100</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>Physics</td>
+                        <td>81</td>
+                        <td>100</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>Chemistry</td>
+                        <td>76</td>
+                        <td>100</td>
+                        <td>B+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Class 11 Result Table -->
+    <div class="result-table class11" style="display: none;">
+        <div class="table-responsive">
+            <table class="exam-table">
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                </tr>
+                <tr>
+                    <td>Math</td>
+                    <td>75</td>
+                    <td>100</td>
+                    <td>B+</td>
+                </tr>
+                <tr>
+                    <td>Biology</td>
+                    <td>80</td>
+                    <td>100</td>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>English</td>
+                    <td>85</td>
+                    <td>100</td>
+                    <td>A</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Class 10 Result Table -->
+    <div class="result-table class10" style="display: none;">
+        <div class="table-responsive">
+            <table class="exam-table">
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                </tr>
+                <tr>
+                    <td>Science</td>
+                    <td>88</td>
+                    <td>100</td>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>Math</td>
+                    <td>90</td>
+                    <td>100</td>
+                    <td>A+</td>
+                </tr>
+                <tr>
+                    <td>Social Science</td>
+                    <td>78</td>
+                    <td>100</td>
+                    <td>B+</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="download-btn" onclick="window.print()">Download PDF</button>
+</div>
+
+
+<!-- INTERNAL -->
+<div id="internal" class="exam-section">
+    <div class="table-responsive">
+        <table class="exam-table">
+            <tr>
+                <th>Assessment</th>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Remarks</th>
+            </tr>
+            <tr>
+                <td>Unit Test 1</td>
+                <td>Math</td>
+                <td>18/20</td>
+                <td>Good</td>
+            </tr>
+            <tr>
+                <td>Project</td>
+                <td>Physics</td>
+                <td>22/25</td>
+                <td>Well Done</td>
+            </tr>
+            <tr>
+                <td>Viva</td>
+                <td>Chemistry</td>
+                <td>15/20</td>
+                <td>Fair</td>
+            </tr>
+            <tr>
+                <td>Assignment</td>
+                <td>English</td>
+                <td>10/10</td>
+                <td>Excellent</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="schedule" class="exam-section">
+    <div class="table-responsive">
+        <table class="exam-table">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Exam</th>
+            </tr>
+            <tr>
+                <td>10 July 2025</td>
+                <td>10:00 AM</td>
+                <td>Mathematics</td>
+                <td>Prelim</td>
+            </tr>
+            <tr>
+                <td>12 July 2025</td>
+                <td>10:00 AM</td>
+                <td>Physics</td>
+                <td>Prelim</td>
+            </tr>
+            <tr>
+                <td>14 July 2025</td>
+                <td>10:00 AM</td>
+                <td>Chemistry</td>
+                <td>Prelim</td>
+            </tr>
+            <tr>
+                <td>16 July 2025</td>
+                <td>10:00 AM</td>
+                <td>English</td>
+                <td>Prelim</td>
+            </tr>
+        </table>
+    </div>
+    <button class="download-btn" onclick="window.print()">Download Schedule</button>
+</div>
+
+<!-- ADMIT CARD -->
+<div id="admit" class="exam-section">
+    <!-- Normal Page Content -->
+    <div class="admit-card-show">
+        <h3>Admit Card</h3>
+        <p><strong>Name:</strong> Ayush Patel</p>
+        <p><strong>Student ID:</strong> STD2500001</p>
+        <p><strong>Roll No:</strong> 54</p>
+        <p><strong>Class:</strong> 12th Science</p>
+        <p><strong>Exam Center:</strong> Kendriya Vidyalaya, Indore</p>
+        <p><strong>Subjects:</strong> Math, Physics, Chemistry, English, CS</p>
+        <button class="download-btn" onclick="downloadAdmitCard()">Download Admit Card</button>
+    </div>
+
+    <!-- Printable/Downloadable Admit Card -->
+    <div id="admitCardPrint" class="admit-card">
+        <div class="school-header">
+            <img src="{% static 'images/school-logo.png' %}" alt="School Logo">
+            <div>
+                <h1>ARYA-Z-TECH SCHOOL</h1>
+                <p>123, Knowledge City, India</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="student-info">
+            <img src="{% static 'images/students/std2500001.jpg' %}" alt="Student Photo">
+            <div>
+                <p><strong>Name:</strong> Ayush Patel</p>
+                <p><strong>Roll No:</strong> STD2500001</p>
+                <p><strong>Class:</strong> 12th Science</p>
+            </div>
+        </div>
+
+        <table class="exam-table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Exam Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Physics</td>
+                    <td>12 July 2025</td>
+                    <td>10:00 AM - 1:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Chemistry</td>
+                    <td>14 July 2025</td>
+                    <td>10:00 AM - 1:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Maths</td>
+                    <td>16 July 2025</td>
+                    <td>10:00 AM - 1:00 PM</td>
+                </tr>
+                <tr>
+                    <td>English</td>
+                    <td>18 July 2025</td>
+                    <td>10:00 AM - 1:00 PM</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="instructions">
+            <h4>Instructions:</h4>
+            <ul>
+                <li>Carry this admit card on all exam days.</li>
+                <li>Report 30 minutes before the exam.</li>
+                <li>Mobile phones & smart watches are not allowed.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        document.querySelectorAll('.exam-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+</script>
+<script>
+    function showResultByClass() {
+        const selectedClass = document.getElementById("classSelect").value;
+        const tables = document.querySelectorAll(".result-table");
+        tables.forEach(table => {
+            if (table.classList.contains(selectedClass)) {
+                table.style.display = "block";
+            } else {
+                table.style.display = "none";
+            }
+        });
+    }
+</script>
+
+<script>
+    function downloadAdmitCard() {
+        var body = document.body.innerHTML;
+        var admitCard = document.getElementById('admitCardPrint').innerHTML;
+        document.body.innerHTML = admitCard;
+        window.print();
+        document.body.innerHTML = body;
+    }
+</script>
+
+
+{% endblock %}

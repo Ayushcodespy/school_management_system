@@ -1,0 +1,173 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}My Attendance{% endblock %}
+
+{% block extra_css %}
+<style>
+    .attendance-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+        margin-bottom: 30px;
+        overflow-x: auto;
+    }
+
+    .attendance-header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .attendance-header h2 {
+        font-size: 22px;
+        color: #7a4df3;
+    }
+
+    .attendance-summary {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .summary-card {
+        background-color: #f7f5ff;
+        padding: 15px 25px;
+        border-radius: 10px;
+        text-align: center;
+        min-width: 140px;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    }
+
+    .summary-card h4 {
+        margin: 0;
+        font-size: 16px;
+        color: #444;
+    }
+
+    .summary-card p {
+        font-size: 20px;
+        font-weight: bold;
+        color: #7a4df3;
+    }
+
+    table.attendance-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    table.attendance-table thead {
+        background-color: #7a4df3;
+        color: white;
+    }
+
+    table.attendance-table th, 
+    table.attendance-table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+        font-size: 14px;
+    }
+
+    table.attendance-table td.present {
+        background-color: #c7f5cb;
+        color: #256029;
+        font-weight: bold;
+    }
+
+    table.attendance-table td.absent {
+        background-color: #ffcaca;
+        color: #9d0b0b;
+        font-weight: bold;
+    }
+
+    table.attendance-table td.leave {
+        background-color: #fff3c4;
+        color: #a17b00;
+        font-weight: bold;
+    }
+
+    table.attendance-table td.na {
+        background-color: #f4f4f4;
+        color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+        table.attendance-table th,
+        table.attendance-table td {
+            padding: 6px;
+            font-size: 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>ATTENDANCE DASHBOARD</h1>
+        <h4>EMP2500002</h4>
+    </div>
+    <!-- <p>Student ID: EMP2500002</p> -->
+</div>
+
+<div class="attendance-container">
+    <div class="attendance-header">
+        <h2>My Attendance - 2025</h2>
+        <p>Teacher ID: TCH24003</p>
+    </div>
+
+    <div class="attendance-summary">
+        <div class="summary-card">
+            <h4>Present</h4>
+            <p>108</p>
+        </div>
+        <div class="summary-card">
+            <h4>Absent</h4>
+            <p>4</p>
+        </div>
+        <div class="summary-card">
+            <h4>Leave</h4>
+            <p>6</p>
+        </div>
+        <div class="summary-card">
+            <h4>Total Working</h4>
+            <p>118</p>
+        </div>
+    </div>
+
+    <table class="attendance-table">
+        <thead>
+            <tr>
+                <th>Month</th>
+                {% for d in date_range %}
+                    <th>{{ d }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for month, days in attendance_data.items %}
+                <tr>
+                    <td><strong>{{ month }}</strong></td>
+                    {% for status in days %}
+                        {% if status == 'P' %}
+                            <td class="present">P</td>
+                        {% elif status == 'A' %}
+                            <td class="absent">A</td>
+                        {% elif status == 'L' %}
+                            <td class="leave">L</td>
+                        {% else %}
+                            <td class="na">-</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

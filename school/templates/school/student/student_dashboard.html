@@ -1,0 +1,77 @@
+<!-- templates/school/student_dashboard.html -->
+ 
+{% extends 'school/student/base.html' %}
+{% load static %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block extra_css %}
+<!-- <link rel="stylesheet" href="{% static 'css/student/student_dashboard.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+
+<div class="header">
+            <div>
+                <h1>Welcome back, Ayush!</h1>
+                <h4>STD2500001</h4>
+                <h4>ayush.jnv54@gmail.com</h4>
+            </div>
+            <!-- <p>3rd Year</p> -->
+        </div>
+
+        <div class="card-section">
+            <div class="card">
+                <h2>Total Attendance</h2>
+                <canvas id="totalAttendanceChart"></canvas>
+                <div class="details">
+                    <div class="attendence">
+                        <div class="positive"></div>
+                        <p>Present : <b>92%</b> </p>
+                    </div>
+                    <div class="attendence">
+                        <div class="negative"></div>
+                        <p>Absentt : <b>8%</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Monthly Attendance</h2>
+                <canvas id="monthlyAttendanceChart"></canvas>
+                <div class="details">
+                    <div class="attendence">
+                        <div class="positive"></div>
+                        <p>Present : <b>70%</b></p>
+                    </div>
+                    <div class="attendence">
+                        <div class="negative"></div>
+                        <p>Absentt : <b>30%</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Complete Profile</h2>
+                <canvas id="completeprofileChart"></canvas>
+                <div class="details">
+                    <div class="attendence">
+                        <div class="positive"></div>
+                        <p>Completed : <b>90%</b></p>
+                    </div>
+                    <div class="attendence">
+                        <div class="negative"></div>
+                        <p>Incomplete : <b>10%</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="important-notice">
+            <h2>Important Notices</h2>
+            <ul>
+                <li>Prelim exams start from 10th July</li>
+                <li>Project submission deadline extended to 15th July</li>
+                <li>Internal assessments next week</li>
+            </ul>
+        </div>
+
+{% endblock %}

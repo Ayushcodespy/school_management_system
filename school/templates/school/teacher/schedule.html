@@ -1,0 +1,91 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}Teaching Schedule{% endblock %}
+
+{% block extra_css %}
+<style>
+    .schedule-container {
+        background-color: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .schedule-header {
+        color: #7a4df3;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    th, td {
+        padding: 12px 16px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background-color: #f8f8f8;
+    }
+
+    tr:hover {
+        background-color: #f4f4f4;
+    }
+
+    @media (max-width: 768px) {
+        table {
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Teaching Schedule</h1>
+        <h4>View your class-wise subject timetable</h4>
+    </div>
+</div>
+
+<div class="schedule-container">
+    <div class="schedule-header">📅 Weekly Teaching Schedule</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Period</th>
+                <th>Time</th>
+                <th>Class</th>
+                <th>Subject</th>
+                <th>Room No.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in schedule %}
+            <tr>
+                <td>{{ entry.day }}</td>
+                <td>{{ entry.period }}</td>
+                <td>{{ entry.time }}</td>
+                <td>{{ entry.class_name }}</td>
+                <td>{{ entry.subject }}</td>
+                <td>{{ entry.room }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

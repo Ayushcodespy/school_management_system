@@ -1,0 +1,159 @@
+{% extends 'school/student/base.html' %}
+{% load static %}
+
+{% block title %}Settings{% endblock %}
+
+{% block extra_css %}
+<style>
+    .settings-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px;
+        background-color: #f0edff;
+        border-radius: 12px;
+        margin-top: 20px;
+    }
+
+    .setting-box {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .setting-box h3 {
+        color: #5e39c9;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .setting-box label {
+        display: block;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+
+    .setting-box input,
+    .setting-box select {
+        width: 100%;
+        padding: 8px 12px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .setting-box button {
+        margin-top: 15px;
+        background-color: #7a4df3;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .setting-box button:hover {
+        background-color: #5e39c9;
+    }
+
+    .section-divider {
+        border-top: 1px solid #ddd;
+        margin: 30px 0;
+    }
+
+    .profile-preview {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .profile-preview img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        border: 2px solid #7a4df3;
+        object-fit: cover;
+    }
+
+    @media (min-width: 768px) {
+        .settings-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Account Settings</h1>
+        <h4>Manage your personal preferences</h4>
+    </div>
+    <p>Student ID: STD2500001</p>
+</div>
+
+<div class="settings-container">
+
+    <!-- Profile Photo -->
+    <div class="setting-box">
+        <h3>Update Profile Photo</h3>
+        <div class="profile-preview">
+            <img src="{% static 'images/students/std2500001.jpg' %}" alt="Student Photo">
+            <input type="file" accept="image/*">
+        </div>
+        <button>Upload</button>
+    </div>
+
+    <!-- Change Password -->
+    <div class="setting-box">
+        <h3>Change Password</h3>
+        <label>Current Password</label>
+        <input type="password" placeholder="Enter current password">
+        <label>New Password</label>
+        <input type="password" placeholder="Enter new password">
+        <label>Confirm New Password</label>
+        <input type="password" placeholder="Re-enter new password">
+        <button>Change Password</button>
+    </div>
+
+    <!-- Edit Personal Info -->
+    <div class="setting-box">
+        <h3>Update Personal Info</h3>
+        <label>Phone Number</label>
+        <input type="text" placeholder="+91 9876543210">
+        <label>Address</label>
+        <input type="text" placeholder="Indore, MP">
+        <label>Email</label>
+        <input type="email" placeholder="ayush@example.com">
+        <button>Update Info</button>
+    </div>
+
+    <!-- Notification Preferences -->
+    <div class="setting-box">
+        <h3>Notifications</h3>
+        <label>Email Alerts</label>
+        <select>
+            <option selected>Enabled</option>
+            <option>Disabled</option>
+        </select>
+        <label>SMS Alerts</label>
+        <select>
+            <option selected>Enabled</option>
+            <option>Disabled</option>
+        </select>
+        <button>Save Preferences</button>
+    </div>
+
+    <!-- Privacy & Logout -->
+    <div class="setting-box">
+        <h3>Privacy & Security</h3>
+        <p>You can review our <a href="#">Privacy Policy</a>.</p>
+        <button style="background-color: #ff4d4d;">Logout</button>
+    </div>
+
+</div>
+{% endblock %}

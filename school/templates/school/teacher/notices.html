@@ -1,0 +1,79 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}Notices{% endblock %}
+
+{% block extra_css %}
+<style>
+    .notices-container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+    }
+
+    .notices-header {
+        color: #7a4df3;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .notice {
+        border-left: 5px solid #7a4df3;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background: #f9f8ff;
+        border-radius: 8px;
+    }
+
+    .notice h4 {
+        margin-bottom: 6px;
+        color: #333;
+        font-size: 18px;
+    }
+
+    .notice small {
+        color: #777;
+    }
+
+    .notice p {
+        margin-top: 8px;
+        color: #555;
+    }
+
+    @media (max-width: 768px) {
+        .notices-header {
+            font-size: 20px;
+        }
+
+        .notice h4 {
+            font-size: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Notices</h1>
+        <h4>Stay updated with recent announcements</h4>
+    </div>
+</div>
+
+<div class="notices-container">
+    <div class="notices-header">📢 Important Notices</div>
+
+    {% for notice in notices %}
+    <div class="notice">
+        <h4>{{ notice.title }}</h4>
+        <small>Posted on: {{ notice.date }}</small>
+        <p>{{ notice.description }}</p>
+    </div>
+    {% empty %}
+    <p style="color: #999;">No notices found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

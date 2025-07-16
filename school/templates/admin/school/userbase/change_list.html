@@ -1,0 +1,31 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+  <style>
+  .admit-button {
+    border: 2px solid #28a745;
+    background-color: #eafaf1;
+    color: #28a745;
+    padding: 12px 18px;
+    border-radius: 8px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .admit-button:hover {
+    background-color: #28a745;
+    color: white;
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+</style>
+
+<div style="margin: 20px; padding: 10px;">
+  <a href="{% url 'admin:add_new_member' %}" class="admit-button">
+    📝 Admit New Member
+  </a>
+</div>
+{% endblock %}

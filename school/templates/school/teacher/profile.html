@@ -1,0 +1,61 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}Teacher Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student/student_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-header">
+    <div class="profile-info">
+        <img class="profile-pic" src="{% static 'images/ayush.jpg' %}" alt="Teacher Image">
+        <div>
+            <h1>Prof. Ayush Patel</h1>
+            <h4>Teacher ID: TCH24003</h4>
+            <h4>ayush.teacher@example.com</h4>
+        </div>
+    </div>
+</div>
+
+<div class="student-profile">
+    <h2 class="section-title">👤 Personal Details</h2>
+    <div class="profile-section">
+        <div><strong>Full Name:</strong> Ayush Patel</div>
+        <div><strong>Date of Birth:</strong> 05-July-1995</div>
+        <div><strong>Gender:</strong> Male</div>
+        <div><strong>Blood Group:</strong> B+</div>
+        <div><strong>Religion:</strong> Hindu</div>
+        <div><strong>Category:</strong> General</div>
+    </div>
+
+    <h2 class="section-title">🏫 Professional Details</h2>
+    <div class="profile-section">
+        <div><strong>Designation:</strong> Assistant Professor</div>
+        <div><strong>Department:</strong> Computer Science</div>
+        <div><strong>Qualification:</strong> M.Tech in Artificial Intelligence</div>
+        <div><strong>Experience:</strong> 5+ Years</div>
+        <div><strong>Subjects Taught:</strong> Python, AI, Data Structures</div>
+        <div><strong>Joining Date:</strong> 01-July-2020</div>
+        <div><strong>Previous Institution:</strong> XYZ Engineering College</div>
+    </div>
+
+    <h2 class="section-title">📞 Contact Details</h2>
+    <div class="profile-section">
+        <div><strong>Phone Number:</strong> +91 9876543210</div>
+        <div><strong>Email:</strong> ayush.teacher@example.com</div>
+        <div><strong>Present Address:</strong> 123, Gyan Nagar, Bhopal, MP</div>
+        <div><strong>Permanent Address:</strong> Same as above</div>
+    </div>
+
+    <h2 class="section-title">📁 Documents</h2>
+    <div class="profile-section">
+        <div><strong>Profile Photo:</strong> <a href="#">View</a></div>
+        <div><strong>Resume/CV:</strong> <a href="#">Download</a></div>
+        <div><strong>Qualification Certificate:</strong> <a href="#">Download</a></div>
+        <div><strong>ID Proof:</strong> <a href="#">Download</a></div>
+        <div><strong>Appointment Letter:</strong> <a href="#">Download</a></div>
+    </div>
+</div>
+{% endblock %}

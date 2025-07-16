@@ -1,0 +1,127 @@
+{% extends 'school/teacher/base.html' %}
+{% load static %}
+
+{% block title %}Student Evaluation{% endblock %}
+
+{% block extra_css %}
+<style>
+    .evaluation-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .evaluation-header {
+        color: #7a4df3;
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    th,
+    td {
+        padding: 12px 16px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    tr:hover {
+        background-color: #f3f3f3;
+    }
+
+    input[type="number"] {
+        width: 60px;
+        padding: 6px;
+        text-align: center;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .submit-btn {
+        background-color: #7a4df3;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #643cd9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Student Evaluation</h1>
+        <h4>EMP2500002</h4>
+    </div>
+    <!-- <p>Student ID: EMP2500002</p> -->
+</div>
+<div class="evaluation-container">
+    <!-- <div class="evaluation-header">📝 Student Evaluation - Class 12th A (Physics)</div> -->
+
+
+    <form method="get" action="{% url 'teacher_evaluation' %}" style="margin-bottom: 20px;">
+    <label for="class-select"><strong>Select Class:</strong></label>
+    <select name="class" id="class-select" onchange="this.form.submit()" style="padding: 5px 10px; border-radius: 6px;">
+        {% for class_code in available_classes %}
+            <option value="{{ class_code }}" {% if class_code == selected_class %}selected{% endif %}>
+                {{ class_code }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+
+
+    <form method="post" action="{% url 'teacher_evaluation' %}">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Assignment</th>
+                    <th>Project</th>
+                    <th>Viva</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>
+                        {{ student.id }}
+                        <input type="hidden" name="student_id" value="{{ student.id }}">
+                    </td>
+                    <td>{{ student.name }}</td>
+                    <td><input type="number" name="assignment_{{ student.id }}" min="0" max="10"></td>
+                    <td><input type="number" name="project_{{ student.id }}" min="0" max="10"></td>
+                    <td><input type="number" name="viva_{{ student.id }}" min="0" max="10"></td>
+                    <td><input type="text" name="remarks_{{ student.id }}" style="width: 100px;"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top: 20px; text-align: right;">
+            <button type="submit" class="submit-btn">Submit Evaluation</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

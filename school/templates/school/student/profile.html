@@ -1,0 +1,75 @@
+{% extends 'school/student/base.html' %}
+{% load static %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/student/student_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-header">
+    <div class="profile-info">
+        <img class="profile-pic" src="{% static 'images/ayush.jpg' %}" alt="Student Image">
+        <div>
+            <h1>Ayush Patel</h1>
+            <h4>STD2500001</h4>
+            <h4>ayush.jnv54@gmail.com</h4>
+        </div>
+    </div>
+    <!-- <p>3rd Year, 12th Science</p> -->
+</div>
+
+<div class="student-profile">
+    <h2 class="section-title">👤 Personal Details</h2>
+    <div class="profile-section">
+        <div><strong>Full Name:</strong> Ayush Patel</div>
+        <div><strong>Date of Birth:</strong> 05-July-2005</div>
+        <div><strong>Gender:</strong> Male</div>
+        <div><strong>Aadhar Number:</strong> 1234 5678 9101</div>
+        <div><strong>Blood Group:</strong> B+</div>
+        <div><strong>Religion:</strong> Hindu</div>
+        <div><strong>Category:</strong> General</div>
+    </div>
+
+    <h2 class="section-title">👪 Parent/Guardian Details</h2>
+    <div class="profile-section">
+        <div><strong>Father's Name:</strong> Mr. Rajesh Patel</div>
+        <div><strong>Father's Occupation:</strong> Teacher</div>
+        <div><strong>Mother's Name:</strong> Mrs. Sunita Patel</div>
+        <div><strong>Mother's Occupation:</strong> Homemaker</div>
+        <div><strong>Guardian Contact:</strong> +91 9876543210</div>
+    </div>
+
+    <h2 class="section-title">📍 Address & Contact</h2>
+    <div class="profile-section">
+        <div><strong>Phone Number:</strong> +91 9876543210</div>
+        <div><strong>Email:</strong> ayush.jnv54@gmail.com</div>
+        <div><strong>Present Address:</strong> Village XYZ, Post ABC, District DEF</div>
+        <div><strong>Permanent Address:</strong> Same as above</div>
+    </div>
+
+    <h2 class="section-title">🎓 Academic Details</h2>
+    <div class="profile-section">
+        <div><strong>Student ID:</strong> STD2500001</div>
+        <div><strong>Admission Number:</strong> ADM20250001</div>
+        <div><strong>Scholar Number:</strong> SCH105501</div>
+        <div><strong>Class:</strong> 12th</div>
+        <div><strong>Stream:</strong> Science</div>
+        <div><strong>Roll Number:</strong> 24</div>
+        <div><strong>Current Semester:</strong> 6</div>
+        <div><strong>Session:</strong> 2023–2024</div>
+        <div><strong>Date of Admission:</strong> 12-June-2020</div>
+        <div><strong>Previous School:</strong> ABC Public School</div>
+    </div>
+
+    <h2 class="section-title">📁 Documents</h2>
+    <div class="profile-section">
+        <div><strong>Photo:</strong> <a href="#">View</a></div>
+        <div><strong>Birth Certificate:</strong> <a href="#">Download</a></div>
+        <div><strong>Aadhar Card:</strong> <a href="#">Download</a></div>
+        <div><strong>Marksheet (Last Exam):</strong> <a href="#">Download</a></div>
+        <div><strong>Transfer Certificate:</strong> <a href="#">Download</a></div>
+    </div>
+</div>
+{% endblock %}
