@@ -11,6 +11,7 @@ class UserBase(models.Model):
     )
 
     user_id = models.CharField(max_length=20, unique=True, primary_key=True)  # e.g. STU2025001
+    full_name = models.CharField(max_length=100)
     user_type = models.CharField(max_length=10, choices=ROLE_CHOICES)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15, unique=True)
@@ -27,3 +28,11 @@ class UserBase(models.Model):
         if not self.password.startswith('pbkdf2_'):
             self.password = make_password(self.password)
         super(UserBase, self).save(*args, **kwargs)
+
+
+class AdmissionFee(models.Model):
+    student_id = models.CharField(max_length=20)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_mode = models.CharField(max_length=10, choices=[('cash', 'Cash'), ('online', 'Online'), ('upi', 'UPI')])
+    transaction_id = models.CharField(max_length=50, blank=True, null=True)
+    paid_on = models.DateTimeField(auto_now_add=True)
