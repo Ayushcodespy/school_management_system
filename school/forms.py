@@ -2,6 +2,7 @@ from django import forms
 from datetime import datetime
 from .models import UserBase
 from django.utils.crypto import get_random_string
+from .models import AdmissionFee
 
 class AdmitMemberForm(forms.ModelForm):
     class Meta:
@@ -77,3 +78,16 @@ class ChangePasswordForm(forms.Form):
         confirm = cleaned_data.get("confirm_password")
         if new != confirm:
             raise forms.ValidationError("Passwords do not match.")
+
+
+
+class AdmissionFeeForm(forms.ModelForm):
+    class Meta:
+        model = AdmissionFee
+        fields = ['student_id', 'amount', 'payment_mode', 'transaction_id']
+        widgets = {
+            'student_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
+            'payment_mode': forms.Select(choices=[('cash', 'Cash'), ('online', 'Online'), ('upi', 'UPI')], attrs={'class': 'form-control'}),
+            'transaction_id': forms.TextInput(attrs={'class': 'form-control'}),
+        }
